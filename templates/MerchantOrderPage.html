@@ -34,7 +34,7 @@
         <div class="gtco-container">
             <div class="row">
                 <div class="col-sm-4 col-xs-12">
-                    <div id="gtco-logo"><a href="MerchantOrderPage">查看订单 <em>.</em></a></div>
+                    <div id="gtco-logo"><a href="merchant.MerchantOrderPage">查看订单 <em>.</em></a></div>
                 </div>
                 <div class="col-xs-8 text-right menu-1">
                     <ul>
@@ -67,7 +67,7 @@
 			</div>
 			<!-- TODO: 此处还想加一个按照时间顺序或价格排列 -->
 			<div class="selectcondition">
-				<form action="{{ url_for('MerchantOrderPage') }}" method="post">
+				<form action="{{ url_for('merchant.MerchantOrderPage') }}" method="post">
 					<input type="submit" name="action" value="按时间排序" style="color: white; font-size: 16px; outline:none; border:0px; background-color: #FBB448; border-radius: 10px;">
 					<input type="submit" name="action" value="按价格排序" style="color: white; font-size: 16px; outline:none; border:0px; background-color: #FBB448; border-radius: 10px;">
 					<span class="badge" style="float: right;">{{ notFinishedNum }}</span><input type="submit" name="action" value="未完成订单" style="background-color: transparent; color: #FBB448; float: right; font-size: 16px; outline:none; border:0px;">
