@@ -1,7 +1,7 @@
 # config.py
 app = 'Takeaway_Order_DBMS'
 
-mysql_pwd = "11235813"
+mysql_pwd = "zhaozhehao"
 db_name = "appDB"
 username = ""
 userRole = ""

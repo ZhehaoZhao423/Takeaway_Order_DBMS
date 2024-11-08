@@ -11,12 +11,12 @@ import sys
 import importlib
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = config.UPLOAD_FOLDER  # 你可以在此设置相关配置
-
+app.config['DEBUG'] = True
 importlib.reload(sys)
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return handlers.page_not_found()
+    return handlers.page_not_found(e)
 
 # 注册蓝图
 views.register_blueprints(app)

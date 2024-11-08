@@ -4,6 +4,6 @@ from .admin_views import admin_blueprint
 from .merchant_views import merchant_blueprint
 
 def register_blueprints(app):
-    app.register_blueprint(user_blueprint)
-    app.register_blueprint(admin_blueprint)
-    app.register_blueprint(merchant_blueprint)
+    app.register_blueprint(user_blueprint, url_prefix='')
+    app.register_blueprint(admin_blueprint, url_prefix='')
+    app.register_blueprint(merchant_blueprint, url_prefix='')

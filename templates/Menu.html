@@ -69,7 +69,7 @@
 			</div>
 			<!-- TODO: 此处还想加一个按照时间顺序或价格排列 -->
 			<div class="selectcondition">
-				<form action="{{ url_for('menu') }}" method="post">
+				<form action="{{ url_for('user.menu') }}" method="post">
 					<input type="submit" name="action" value="特色菜" style="color: white; font-size: 16px; outline:none; border:0px; background-color: #FBB448; border-radius: 10px;">
 					<input type="submit" name="action" value="按销量排序" style="color: white; font-size: 16px; outline:none; border:0px; background-color: #FBB448; border-radius: 10px;">
 					<input type="submit" name="action" value="按价格排序" style="color: white; font-size: 16px; outline:none; border:0px; background-color: #FBB448; border-radius: 10px;">
@@ -95,7 +95,7 @@
 									<p>营养成分：{{ item[3] }}</p>
                                     <p>销量：{{item[5] }}</p>
 									<p style="margin-left: 322px;">价格：<span class="price cursive-font">￥{{ item[4]}}</span></p>
-									<form action="{{ url_for('shoppingCartPage') }}" method="POST">
+									<form action="{{ url_for('user.shoppingCartPage') }}" method="POST">
 										<input name="restaurant" value="{{ item[1] }}" style="display: none;">
                                         <input name="dishname" value="{{ item[0] }}" style="display: none;">
                                         <input name="price" value="{{ item[4] }}" style="display: none;">

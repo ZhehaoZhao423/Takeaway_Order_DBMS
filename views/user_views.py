@@ -1,7 +1,7 @@
 # views/user_views.py
 from flask import render_template, request, Blueprint
 import pymysql
-from config import app, mysql_pwd, db_name, username
+from config import mysql_pwd, db_name, username
 
 user_blueprint = Blueprint('user', __name__)
 
@@ -171,72 +171,13 @@ def logInPage():
             # 如果存在该用户且密码正确
             if num == 1:
                 print("登录成功！欢迎用户！")
+                # print("login user: ",username)
                 msg = "done3"
             else:
                 print("您没有用户权限，未注册或登录信息出错。")
                 msg = "fail3"
             return render_template('logIn.html', messages=msg, username=username, userRole=userRole)
 
-# 管理员的店铺列表页面
-@user_blueprint.route('/adminRestList', methods=['GET', 'POST'])
-def adminRestListPage():
-    msg = ""
-    if request.method == 'GET':
-        msg = ""
-        # 连接数据库，默认数据库用户名root，密码空
-        db =  pymysql.connect(host="localhost", user="root", password=mysql_pwd, database=db_name,charset='utf8')
-        cursor = db.cursor()
-        try:
-            cursor.execute("use appDB")
-        except:
-            print("Error: unable to use database!")
-
-        # 查询
-        sql = "SELECT * FROM RESTAURANT"
-        cursor.execute(sql)
-        res = cursor.fetchall()
-        # print(res)
-        # print(len(res))
-        if len(res) != 0:
-            msg = "done"
-            print(msg)
-            return render_template('adminRestList.html', username=username, result=res, messages=msg)
-        else:
-            print("NULL")
-            msg = "none"
-            return render_template('adminRestList.html', username=username, messages=msg)
-    elif request.form["action"] == "移除":
-        RESTName = request.form.get('RESTName')
-        # 连接数据库，默认数据库用户名root，密码空
-        db = pymysql.connect(host="localhost", user="root", password=mysql_pwd, database=db_name,charset='utf8')
-        cursor = db.cursor()
-        try:
-            cursor.execute("use appDB")
-        except:
-            print("Error: unable to use database!")
-        # TODO: 点击移除后显示移除成功，但数据库里没有删掉
-        # 删除DISHES的
-        sql1 = "DELETE FROM DISHES WHERE restaurant = '{}'".format(RESTName)
-        cursor.execute(sql1)
-        db.commit()
-        # 删除订单表里的
-        sql2 = "DELETE FROM ORDER_COMMENT WHERE restaurant = '{}'".format(RESTName)
-        cursor.execute(sql2)
-        db.commit()
-        # 删除shoppingCart的
-        sql3 = "DELETE FROM WHERE restaurant = '{}'".format(RESTName)
-        cursor.execute(sql3)
-        db.commit()
-        # 删除restaurant的
-        sql4 = "DELETE FROM RESTAURANT WHERE username = '{}'".format(RESTName)
-        cursor.execute(sql4)
-        db.commit()
-        print(sql4)
-
-        msg = "delete"
-        print(msg)
-
-        return render_template('adminRestList.html', username=username, messages=msg)
 
 #选择商家进入菜单列表
 @user_blueprint.route('/Menu',methods=['GET', 'POST'])
@@ -353,8 +294,8 @@ def resComment():
         sql = "SELECT * FROM ORDER_COMMENT WHERE restaurant = '%s' AND isFinished = 1 AND text <> '' "% restaurant
         cursor.execute(sql)
         res = cursor.fetchall()
-        # print(res)
-        # print(len(res))
+        print(res)
+        print(len(res))
         if len(res) != 0:
             msg = "done"
             print(msg)
@@ -365,39 +306,12 @@ def resComment():
             msg = "none"
         return render_template('ResComment.html', username=username, RESTAURANT=restaurant, messages=msg)
 
-#商家查看评论
-@user_blueprint.route('/ResCommentList', methods=['GET', 'POST'])
-def ResCommentList():
-    msg = ""
-    # 连接数据库，默认数据库用户名root，密码空
-    restaurant=username
-    print(restaurant)
-    db =  pymysql.connect(host="localhost", user="root", password=mysql_pwd, database=db_name,charset='utf8')
-    cursor = db.cursor()
-    try:
-        cursor.execute("use appDB")
-    except:
-        print("Error: unable to use database!")
-    # 查询
-    sql = "SELECT * FROM ORDER_COMMENT WHERE restaurant = '%s' AND isFinished = 1 AND text <> '' " % restaurant
-    cursor.execute(sql)
-    res = cursor.fetchall()
-    # print(res)
-    # print(len(res))
-    if len(res) != 0:
-        msg = "done"
-        print(msg)
-        print(len(res))
-        return render_template('ResCommentList.html', username=username, RESTAURANT=restaurant, result=res,
-                                   messages=msg)
-    else:
-        print("NULL")
-        msg = "none"
-    return render_template('ResCommentList.html', username=username, RESTAURANT=restaurant, messages=msg)
 
 # 购物车
 @user_blueprint.route('/myOrder',methods=['GET', 'POST'])
 def shoppingCartPage():
+    global username
+    print("global user:",username)
     if request.method == 'GET':
         print("myOrder-->GET")
         db =  pymysql.connect(host="localhost", user="root", password=mysql_pwd, database=db_name,charset='utf8')
@@ -433,6 +347,7 @@ def shoppingCartPage():
             cursor.execute("use appDB")
         except:
             print("Error: unable to use database!")
+        print("shopping user: ",username)
         sql1 = "insert into  SHOPPINGCART (username,restaurant,dishname,price,img_res) values ('{}','{}','{}',{},'{}') ".format(username,restaurant,dishname,price,img_res)
         cursor.execute(sql1)
         sql = "SELECT * FROM SHOPPINGCART"
@@ -520,6 +435,8 @@ def ModifyPersonalInfo():
 # 修改密码页面
 @user_blueprint.route('/ModifyPassword', methods=['GET', 'POST'])
 def ModifyPassword():
+    global username
+    print("username:",username)
     msg = ""
     if request.method == 'GET':
         return render_template('ModifyPassword.html', username=username)

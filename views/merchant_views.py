@@ -327,6 +327,36 @@ def MerModifyPassword():
             msg = "not equal"
             return render_template('MerchantModifyPwd.html', messages=msg, username=username)
 
+#商家查看评论
+@merchant_blueprint.route('/ResCommentList', methods=['GET', 'POST'])
+def ResCommentList():
+    msg = ""
+    # 连接数据库，默认数据库用户名root，密码空
+    restaurant=username
+    print(restaurant)
+    db =  pymysql.connect(host="localhost", user="root", password=mysql_pwd, database=db_name,charset='utf8')
+    cursor = db.cursor()
+    try:
+        cursor.execute("use appDB")
+    except:
+        print("Error: unable to use database!")
+    # 查询
+    sql = "SELECT * FROM ORDER_COMMENT WHERE restaurant = '%s' AND isFinished = 1 AND text <> '' " % restaurant
+    cursor.execute(sql)
+    res = cursor.fetchall()
+    # print(res)
+    # print(len(res))
+    if len(res) != 0:
+        msg = "done"
+        print(msg)
+        print(len(res))
+        return render_template('ResCommentList.html', username=username, RESTAURANT=restaurant, result=res,
+                                   messages=msg)
+    else:
+        print("NULL")
+        msg = "none"
+    return render_template('ResCommentList.html', username=username, RESTAURANT=restaurant, messages=msg)
+
 
 # 商家查看订单
 @merchant_blueprint.route('/MerchantOrderPage', methods=['GET', 'POST'])
