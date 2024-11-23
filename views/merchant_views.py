@@ -361,6 +361,8 @@ def ResCommentList():
 # 商家查看订单
 @merchant_blueprint.route('/MerchantOrderPage', methods=['GET', 'POST'])
 def MerchantOrderPage():
+    global username
+    print("global user:",username)
     msg = ""
     global notFinishedNum
     if request.method == 'GET':

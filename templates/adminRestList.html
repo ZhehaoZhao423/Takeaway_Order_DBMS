@@ -77,7 +77,7 @@
 									<h3 class="cursive-font primary-color">ADDRESS：{{ item[2] }}</h3>
 									<h3 class="cursive-font primary-color">PHONE：{{ item[3] }}</h3>
 								</div>
-								<form action="{{ url_for('adminRestListPage') }}" method="post">
+								<form action="{{ url_for('admin.adminRestListPage') }}" method="post">
 									<input name="RESTName" value="{{ item[0] }}" style="display: none;">
 									<input type="submit" name="action" value="移除" style="margin: 8px; font-size: 20px; float: right; color: #FBB448; background-color: white; font-size: 16px; outline:none; border: 1px solid #FBB448; border-radius: 10px;">
 								</form>
@@ -116,7 +116,7 @@
 				</div>
 
 				<div class="col-md-12 text-center copyright">
-					<p><big class="block">&copy; 2020 ZhangHongYu SWPU数据库原理及应用大作业</big>
+					<p><big class="block">&copy; 2024 赵哲浩 毛锐 孔郡晓 NIS3351 数据库原理及安全大作业</big>
 				</div>
 
 			</div>
