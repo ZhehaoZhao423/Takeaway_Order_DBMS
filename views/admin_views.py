@@ -1,5 +1,6 @@
 # views/admin_views.py
 from config import app, mysql_pwd, db_name, username  # 导入配置变量
+import config
 from flask import render_template, request, Blueprint
 import pymysql
 
@@ -9,6 +10,7 @@ admin_blueprint = Blueprint('admin', __name__)
 @admin_blueprint.route('/adminRestList', methods=['GET', 'POST'])
 def adminRestListPage():
     msg = ""
+    username = config.username
     if request.method == 'GET':
         msg = ""
         # 连接数据库，默认数据库用户名root，密码空
@@ -71,6 +73,7 @@ def adminRestListPage():
 @admin_blueprint.route('/adminCommentList', methods=['GET', 'POST'])
 def adminCommentPage():
     msg = ""
+    username = config.username
     if request.method == 'GET':
         msg = ""
         # 连接数据库，默认数据库用户名root，密码空
@@ -121,6 +124,7 @@ def adminCommentPage():
 @admin_blueprint.route('/UserRestList',methods=['GET', 'POST'])
 def UserRestListPage():
     msg = ""
+    username = config.username
     if request.method == 'GET':
         msg = ""
         # 连接数据库，默认数据库用户名root，密码空

@@ -3,6 +3,7 @@ from config import app, mysql_pwd, db_name, username, userRole  # 导入配置�
 from flask import render_template, request, Blueprint
 from werkzeug.utils import secure_filename
 import pymysql
+import config
 
 from utils import allowed_file
 
@@ -11,6 +12,8 @@ merchant_blueprint = Blueprint('merchant', __name__)
 # 商家查看菜品信息
 @merchant_blueprint.route('/MerchantMenu', methods=['GET', 'POST'])
 def MerchantMenu():
+    username = config.username
+    print(username)
     msg = ""
     if request.method == 'GET':
         msg = ""
@@ -24,10 +27,12 @@ def MerchantMenu():
         # 查询
         sql = "SELECT * FROM DISHES WHERE restaurant = '%s'" % username
 
+        print(sql)
+
         cursor.execute(sql)
         res = cursor.fetchall()
-        # print(res)
-        # print(len(res))
+        print(res)
+        print(len(res))
         if len(res) != 0:
             msg = "done"
             print(msg)
@@ -107,6 +112,7 @@ def MerchantMenu():
 # 商家修改菜品信息
 @merchant_blueprint.route('/MenuModify', methods=['GET', 'POST'])
 def MenuModify():
+    username = config.username
     msg = ""
 
     print(request.method)
@@ -176,6 +182,7 @@ def MenuModify():
 
 @merchant_blueprint.route('/MenuAdd', methods=['GET', 'POST'])
 def MenuAdd():
+    username = config.username
     msg = ""
     rest = ""
     print(request.method)
@@ -246,6 +253,8 @@ def MpersonalPage():
 # 修改个人信息页面
 @merchant_blueprint.route('/MerchantModifyPerInfo', methods=['GET', 'POST'])
 def MerchantModifyPerInfo():
+    username = config.username
+    userRole = config.userRole
     msg = ""
     if request.method == 'GET':
         return render_template('MerchantModifyPerInfo.html', username=username)
@@ -296,6 +305,8 @@ def MerchantModifyPerInfo():
 # 修改密码页面
 @merchant_blueprint.route('/MerchantModifyPwd', methods=['GET', 'POST'])
 def MerModifyPassword():
+    username = config.username
+    userRole = config.userRole
     msg = ""
     if request.method == 'GET':
         return render_template('MerchantModifyPwd.html', username=username)
@@ -330,6 +341,8 @@ def MerModifyPassword():
 #商家查看评论
 @merchant_blueprint.route('/ResCommentList', methods=['GET', 'POST'])
 def ResCommentList():
+    username = config.username
+    userRole = config.userRole
     msg = ""
     # 连接数据库，默认数据库用户名root，密码空
     restaurant=username
@@ -361,7 +374,7 @@ def ResCommentList():
 # 商家查看订单
 @merchant_blueprint.route('/MerchantOrderPage', methods=['GET', 'POST'])
 def MerchantOrderPage():
-    global username
+    username = config.username
     print("global user:",username)
     msg = ""
     global notFinishedNum

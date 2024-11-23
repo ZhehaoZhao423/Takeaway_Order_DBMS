@@ -1,7 +1,8 @@
 # views/user_views.py
 from flask import render_template, request, Blueprint
 import pymysql
-from config import mysql_pwd, db_name, username
+import config
+from config import *
 
 user_blueprint = Blueprint('user', __name__)
 
@@ -15,8 +16,6 @@ def indexpage():
 # 注册
 @user_blueprint.route('/register', methods=['GET', 'POST'])
 def registerPage():
-    global username
-    global userRole
     msg = ""
     if request.method == 'GET':
         return render_template('Register.html')
@@ -26,6 +25,8 @@ def registerPage():
         phone = request.form.get('phone')
         addr = request.form.get('addr')
         userRole = request.form.get('userRole')
+        config.username = username
+        config.userRole = userRole
         print(userRole)
         print(username)
         # 连接数据库，默认数据库用户名root，密码空
@@ -97,8 +98,6 @@ def registerPage():
 # 登录
 @user_blueprint.route('/logIn', methods=['GET', 'POST'])
 def logInPage():
-    global username
-    global userRole
     msg = ""
     if request.method == 'GET':
         return render_template('logIn.html')
@@ -106,6 +105,8 @@ def logInPage():
         username = request.form.get('username')
         password = request.form.get('password')
         userRole = request.form.get('userRole')
+        config.username = username
+        config.userRole = userRole
         print(userRole)
         print(username)
         # 连接数据库，默认数据库用户名root，密码空
@@ -310,7 +311,7 @@ def resComment():
 # 购物车
 @user_blueprint.route('/myOrder',methods=['GET', 'POST'])
 def shoppingCartPage():
-    global username
+    username = config.username
     print("global user:",username)
     if request.method == 'GET':
         print("myOrder-->GET")
@@ -407,6 +408,8 @@ def personalPage():
 @user_blueprint.route('/ModifyPersonalInfo', methods=['GET', 'POST'])
 def ModifyPersonalInfo():
     msg = ""
+    username = config.username
+    userRole = config.userRole
     if request.method == 'GET':
         return render_template('ModifyPersonalInfo.html', username=username)
     if request.method == 'POST':
@@ -437,7 +440,8 @@ def ModifyPersonalInfo():
 # 修改密码页面
 @user_blueprint.route('/ModifyPassword', methods=['GET', 'POST'])
 def ModifyPassword():
-    global username
+    username = config.username
+    userRole = config.userRole
     print("username:",username)
     msg = ""
     if request.method == 'GET':
@@ -474,6 +478,8 @@ def ModifyPassword():
 @user_blueprint.route('/OrderPage', methods=['GET', 'POST'])
 def OrderPage():
     msg = ""
+    username = config.username
+    userRole = config.userRole
     global notFinishedNum
     if request.method == 'GET':
         msg = ""
@@ -607,6 +613,8 @@ def OrderPage():
 @user_blueprint.route('/MyComments', methods=['GET', 'POST'])
 def MyCommentsPage():
     msg = ""
+    username = config.username
+    userRole = config.userRole
     global notFinishedNum
 
     if request.method == 'GET':
@@ -714,6 +722,8 @@ def MyCommentsPage():
 @user_blueprint.route('/WriteComments', methods=['GET', 'POST'])
 def WriteCommentsPage():
     msg=""
+    username = config.username
+    userRole = config.userRole
     if request.method == 'GET':
         # 连接数据库，默认数据库用户名root，密码空
         db = pymysql.connect(host="localhost", user="root", password=mysql_pwd, db=db_name, charset='utf8')
@@ -814,6 +824,8 @@ def WriteCommentsPage():
 @user_blueprint.route('/CommentForm', methods=['GET', 'POST'])
 def CommentFormPage():
     msg = ""
+    username = config.username
+    userRole = config.userRole
     print(request.method)
     # print(request.form["action"])
     if request.form["action"] == "写评论":
