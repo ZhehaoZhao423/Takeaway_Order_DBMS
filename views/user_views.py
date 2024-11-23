@@ -335,64 +335,66 @@ def shoppingCartPage():
             print("NULL")
             msg = "none"
             return render_template('myOrder.html', username=username, messages=msg)
-    elif request.form["action"] == "加入购物车":
-        print("myOrder-->加入购物车")
-        restaurant = request.form['restaurant']
-        dishname = request.form['dishname']
-        price = (float)(request.form['price'])
-        img_res = request.form['img_res']
-        db = pymysql.connect(host="localhost", user="root", password=mysql_pwd, db=db_name, charset='utf8')
-        cursor = db.cursor()
-        try:
-            cursor.execute("use appDB")
-        except:
-            print("Error: unable to use database!")
-        print("shopping user: ",username)
-        sql1 = "insert into  SHOPPINGCART (username,restaurant,dishname,price,img_res) values ('{}','{}','{}',{},'{}') ".format(username,restaurant,dishname,price,img_res)
-        cursor.execute(sql1)
-        sql = "SELECT * FROM SHOPPINGCART"
-        cursor.execute(sql)
-        res = cursor.fetchall()
-        if len(res) != 0:
-            msg = "done"
-            print(msg)
-            print(len(res))
-            return render_template('myOrder.html', username=username, result=res, messages=msg)
+    elif request.method == 'POST':
+        print("Received POST data:", request.form)
+        if request.form["action"] == "加入购物车":
+            print("myOrder-->加入购物车")
+            restaurant = request.form['restaurant']
+            dishname = request.form['dishname']
+            price = (float)(request.form['price'])
+            img_res = request.form['img_res']
+            db = pymysql.connect(host="localhost", user="root", password=mysql_pwd, db=db_name, charset='utf8')
+            cursor = db.cursor()
+            try:
+                cursor.execute("use appDB")
+            except:
+                print("Error: unable to use database!")
+            print("shopping user: ",username)
+            sql1 = "insert into  SHOPPINGCART (username,restaurant,dishname,price,img_res) values ('{}','{}','{}',{},'{}') ".format(username,restaurant,dishname,price,img_res)
+            cursor.execute(sql1)
+            sql = "SELECT * FROM SHOPPINGCART"
+            cursor.execute(sql)
+            res = cursor.fetchall()
+            if len(res) != 0:
+                msg = "done"
+                print(msg)
+                print(len(res))
+                return render_template('myOrder.html', username=username, result=res, messages=msg)
+            else:
+                print("NULL")
+                msg = "none"
+            return render_template('myOrder.html', username=username, messages=msg)
+
+        elif request.form["action"] == "结算":
+            print("结算啦")
+            db = pymysql.connect(host="localhost", user="root", password=mysql_pwd, db=db_name, charset='utf8')
+            cursor = db.cursor()
+            try:
+                cursor.execute("use appDB")
+            except:
+                print("Error: unable to use database!")
+            '''
+            这下面
+            '''
+            restaurant = request.form['restaurant']
+            print(restaurant)
+            dishname = request.form['dishname']
+            price = request.form['price']
+            img_res = request.form['img_res']
+            mode = request.form['mode']
+            print("************************************************")
+            print("==*==")
+            print(mode)
+
+            if mode == 1:
+                print("堂食")
+
+            else:
+                print("外送")
+            return render_template('index.html')
         else:
-            print("NULL")
-            msg = "none"
-        return render_template('myOrder.html', username=username, messages=msg)
-
-    elif request.form["action"] == "结算":
-        print("结算啦")
-        db = pymysql.connect(host="localhost", user="root", password=mysql_pwd, db=db_name, charset='utf8')
-        cursor = db.cursor()
-        try:
-            cursor.execute("use appDB")
-        except:
-            print("Error: unable to use database!")
-        '''
-        这下面
-        '''
-        restaurant = request.form['restaurant']
-        print(restaurant)
-        dishname = request.form['dishname']
-        price = request.form['price']
-        img_res = request.form['img_res']
-        mode = request.form['mode']
-        print("************************************************")
-        print("==*==")
-        print(mode)
-
-        if mode == 1:
-            print("堂食")
-
-        else:
-            print("外送")
-        return render_template('index.html')
-    else:
-        print("咋回事")
-        return render_template('index.html')
+            print("咋回事")
+            return render_template('index.html')
 
 
 # 个人中心页面
