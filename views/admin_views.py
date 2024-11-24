@@ -53,9 +53,9 @@ def adminRestListPage():
         sql2 = "DELETE FROM ORDER_COMMENT WHERE restaurant = '{}'".format(RESTName)
         cursor.execute(sql2)
         db.commit()
-        # 删除shoppingCart的
-        sql3 = "DELETE FROM WHERE restaurant = '{}'".format(RESTName)
-        cursor.execute(sql3)
+        # # 删除shoppingCart的
+        # sql3 = "DELETE FROM WHERE restaurant = '{}'".format(RESTName)
+        # cursor.execute(sql3)
         db.commit()
         # 删除restaurant的
         sql4 = "DELETE FROM RESTAURANT WHERE username = '{}'".format(RESTName)

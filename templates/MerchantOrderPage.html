@@ -79,31 +79,22 @@
 				<div class="col-lg-12 col-md-4 col-sm-6">
 					{% if messages == "done" %}
 						{% for item in result %}
-							<a href={{item[8]}} class="fh5co-card-item image-popup">
-								<figure class="col-lg-4" style="float: left;">
-									<div class="overlay"><i class="ti-plus"></i></div>
-									<img src={{item[8]}} alt="Image" class="img-responsive">
-								</figure>
-								<div class="fh5co-text">
+							<a href={{item[8]}} class="fh5co-card-item">
+{#								<figure class="col-lg-4" style="float: left;">#}
+{#									<div class="overlay"><i class="ti-plus"></i></div>#}
+{#									<img src={{item[8]}} alt="Image" class="img-responsive">#}
+{#								</figure>#}
+								<div class="fh5co-text" style="float: left ;padding: 20px; text-align: left;">
 									<h2 style="margin-top: 40px;"> 菜品：{{ item[2] }} </h2>
 									<p>订单号：{{ item[0] }}</p>
-									<p>交易时间：{{ item[9] }}</p>
-									<!-- mode=0：外卖，mode=1：堂食 -->
-									{% if item[4] == 1 %}
-										<p>就餐方式：堂食</p>
-										<p>餐厅地址：{{ item[6] }}</p>
-										<p>取餐时间：{{ item[5] }}</p>
-									{% elif item[4] == 0 %}
-										<p>就餐方式：外卖</p>
-										<p>配送地址：{{ item[6] }}</p>
-										<p>送达时间：{{ item[5] }}</p>
-									{% endif %}
-									{% if item[7] == 1 %}
+									<p>交易时间：{{ item[7] }}</p>
+									<p>用户昵称：{{ item[1] }}</p>
+									{% if item[3] == 1 %}
 										<p>订单状态：已完成</p>
-									{% elif item[7] == 0 %}
+									{% elif item[3] == 0 %}
 										<p>订单状态：<span style="color: red;">未完成</span></p>
 									{% endif %}
-									<p>订单总价格：<span class="price cursive-font">￥{{ item[13]}}</span></p>
+									<p>订单总价格：<span class="price cursive-font">￥{{ item[4]}}</span></p>
 								</div>
 							</a>
 						{% endfor %}
