@@ -7,15 +7,25 @@ NIS3351 数据库原理及安全大作业
 
 ### 项目结构
 ```
-├── static             //网页静态资源
-│ ├── css             //css样式配置
-│ ├── fonts            //字体配置
-│ ├── images           //图片文件
-│ ├── js              //javascript脚本文件
-├── templates           //基于jinja2编写的HTML模板文件
-├── app.py             //Web服务启动程序
-├── config.py           //配置文件
-└── README.md           //help
+├── README.md                 // 项目说明文档
+├── app.py                    // 主程序入口
+├── config.py                 // 配置文件
+├── init.sql                  // 数据库初始化脚本
+├── utils.py                  // 工具函数集合
+├── static                    // 静态资源文件夹
+│   ├── css                   // CSS样式文件
+│   ├── fonts                 // 字体文件
+│   ├── images                // 图片文件
+│   ├── js                    // JavaScript脚本
+├── templates                 // HTML模板文件夹
+├── handlers                  // 逻辑处理模块
+│   ├── __init__.py          // 初始化文件
+│   ├── error_handlers.py    // 错误处理模块
+├── views                     // 路由视图模块
+│   ├── __init__.py          // 初始化文件
+│   ├── admin_views.py       // 管理员视图
+│   ├── merchant_views.py    // 商家视图
+│   ├── user_views.py        // 用户视图
 ```
 ### 环境依赖
 Python 3.9.10         
