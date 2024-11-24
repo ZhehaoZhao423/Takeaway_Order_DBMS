@@ -33,6 +33,6 @@ mysql -uroot -p  < init.sql
 
 最后执行Web服务启动程序
 ```
-python app.py --mysql_pwd 11235813 --db_name appDB
+python app.py --mysql_pwd 123456 --db_name appDB
 ```
 注意此处mysql_pwd也是你MySQL的root用户登录密码，db_name即你用init.sql创建的数据库名称。
